@@ -94,13 +94,21 @@ public class MilkteaBot extends TelegramLongPollingBot {
     // ─────────────────────────────────────────────
     private void handleCallback(Update update) {
         String data      = update.getCallbackQuery().getData();
-        long   chatId    = update.getCallbackQuery().getMessage().getChatId();
+        Long   chatId    = update.getCallbackQuery().getMessage().getChatId();
         int    messageId = update.getCallbackQuery().getMessage().getMessageId();
         String name      = update.getCallbackQuery().getFrom().getFirstName();
         String username  = update.getCallbackQuery().getFrom().getUserName();
 
         log.info("Callback from {} ({}): {}", name, chatId, data);
         clearKeyboard(chatId, messageId);
+
+        // Owner-only callbacks
+        if (data.startsWith("OWNER_")) {
+            if (!chatId.equals(botConfig.getOwnerChatId())) {
+                send(chatId, "Bạn không có quyền thực hiện thao tác này.", null);
+                return;
+            }
+        }
 
         UserSession session = sessionService.getSession(chatId);
 
@@ -361,6 +369,11 @@ public class MilkteaBot extends TelegramLongPollingBot {
 
     private void handleNote(long chatId, String name, String username,
                             String text, UserSession session) {
+        if (text.length() > 200) {
+            send(chatId, "Ghi chú quá dài (tối đa 200 ký tự).\nVui lòng nhập lại.", null);
+            return;
+        }
+
         String note = (text.equalsIgnoreCase("không")
                 || text.equalsIgnoreCase("ko")
                 || text.equalsIgnoreCase("k")) ? "" : text;

@@ -2,6 +2,7 @@ package com.milkteabot.model;
 
 import lombok.Data;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +21,16 @@ public class UserSession {
     }
 
     private State state = State.IDLE;
+    private Instant lastActivity = Instant.now();
     private List<CartItem> cart = new ArrayList<>();
     private String pendingItemId;
     private String pendingSize;
     private int pendingQuantity = 1;
     private List<String> pendingToppings = new ArrayList<>();
+
+    public void touch() {
+        lastActivity = Instant.now();
+    }
 
     public void reset() {
         state = State.IDLE;
@@ -33,6 +39,7 @@ public class UserSession {
         pendingSize = null;
         pendingQuantity = 1;
         pendingToppings = new ArrayList<>();
+        lastActivity = Instant.now();
     }
 
     public void clearPendingToppings() {

@@ -79,6 +79,7 @@ public class MilkteaBot extends TelegramLongPollingBot {
             case "/cancel"                  -> handleCancel(chatId);
             case "/history"                 -> handleHistory(chatId);
             case "/help",    "Hướng dẫn" -> handleHelp(chatId);
+            case "/summary"                 -> handleSummary(chatId);
             default -> {
                 if (session.getState() == UserSession.State.WAITING_NOTE) {
                     handleNote(chatId, name, username, text, session);
@@ -336,6 +337,14 @@ public class MilkteaBot extends TelegramLongPollingBot {
                 + "/cancel — Hủy đơn\n"
                 + "/history — Lịch sử đơn hàng\n\n"
                 + "_Chọn món theo từng bước, bot sẽ hướng dẫn bạn!_", null);
+    }
+
+    private void handleSummary(long chatId) {
+        if (!((Long) chatId).equals(botConfig.getOwnerChatId())) {
+            send(chatId, "Bạn không có quyền dùng lệnh này.", null);
+            return;
+        }
+        send(chatId, orderService.getDailySummary(), null);
     }
 
     private void handleUnknown(long chatId) {

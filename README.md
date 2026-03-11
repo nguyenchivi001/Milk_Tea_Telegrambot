@@ -15,6 +15,7 @@ Telegram bot đặt trà sữa tự động, thay thế quy trình nhận đơn 
 - Xác nhận hoặc từ chối đơn bằng 1 nút bấm
 - Cập nhật trạng thái: Đang chuẩn bị → Hoàn thành
 - Nhận thông báo khi khách hủy đơn
+- Xem tổng kết doanh thu trong ngày
 
 ## Công nghệ
 
@@ -101,7 +102,7 @@ PENDING → CONFIRMED → PREPARING → DONE
 
 **1. Clone project**
 ```bash
-git clone https://github.com/<your-username>/milkteabot.git
+git clone https://github.com/nguyenchivi001/Milk_Tea_Telegrambot
 cd milkteabot
 ```
 
@@ -157,12 +158,13 @@ docker run -d \
 
 ## Các lệnh bot
 
-| Lệnh | Chức năng |
-|------|-----------|
-| `/start` | Khởi động bot, hiện menu chính |
-| `/order` | Bắt đầu đặt hàng |
-| `/menu` | Xem toàn bộ menu và giá |
-| `/cart` | Xem giỏ hàng hiện tại |
-| `/cancel` | Hủy phiên đặt hàng đang thực hiện |
-| `/history` | Xem 5 đơn hàng gần nhất |
-| `/help` | Hướng dẫn sử dụng |
+| Lệnh | Dành cho | Chức năng |
+|------|----------|-----------|
+| `/start` | Khách | Khởi động bot, hiện menu chính |
+| `/order` | Khách | Bắt đầu đặt hàng |
+| `/menu` | Khách | Xem toàn bộ menu và giá |
+| `/cart` | Khách | Xem giỏ hàng hiện tại |
+| `/cancel` | Khách | Hủy phiên đặt hàng đang thực hiện |
+| `/history` | Khách | Xem 5 đơn hàng gần nhất |
+| `/help` | Khách | Hướng dẫn sử dụng |
+| `/summary` | Chủ quán | Xem tổng kết doanh thu trong ngày |
